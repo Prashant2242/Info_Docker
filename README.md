@@ -275,7 +275,7 @@ Login Succeeded
 You need to change the username accoringly in the below command
 
 ```
-docker build -t prashant6/my-first-docker-image:latest .
+docker build -t prashant2242/my-first-docker-image:latest .
 ```
 
 Output of the above command
@@ -318,7 +318,7 @@ Output
 
 ```
 REPOSITORY                         TAG       IMAGE ID       CREATED          SIZE
-prashant6/my-first-docker-image   latest    960d37536dcd   26 seconds ago   467MB
+prashant2242/my-first-docker-image   latest    960d37536dcd   26 seconds ago   467MB
 ubuntu                             latest    58db3edaf2be   13 days ago      77.8MB
 hello-world                        latest    feb5d9fea6a5   16 months ago    13.3kB
 ```
@@ -326,7 +326,7 @@ hello-world                        latest    feb5d9fea6a5   16 months ago    13.
 ### Run your First Docker Container
 
 ```
-docker run -it prashant6/my-first-docker-image
+docker run -it prashant2242/my-first-docker-image
 ```
 
 Output
@@ -338,7 +338,7 @@ Hello World
 ### Push the Image to DockerHub and share it with the world
 
 ```
-docker push prashant6/my-first-docker-image
+docker push prashant2242/my-first-docker-image
 ```
 
 Output
