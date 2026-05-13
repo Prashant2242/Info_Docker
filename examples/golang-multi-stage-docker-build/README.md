@@ -22,13 +22,13 @@ The Problem Without Multi-Stage Builds
 
 Suppose you have a Go application.
 
-# To compile Go code, Docker needs:
+**To compile Go code, Docker needs:**
 
 Go compiler
 Go libraries
 Build dependencies
 
-# If you keep all of these inside the final image:
+**If you keep all of these inside the final image:**
 
 image becomes large
 unnecessary tools remain
