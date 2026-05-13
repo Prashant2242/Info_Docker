@@ -126,7 +126,7 @@ CMD ["/calculator"]
 
 ---
 
-# Complete Example
+## Complete Example
 
 ```dockerfile
 # Stage 1 - Build
@@ -148,7 +148,7 @@ CMD ["/calculator"]
 
 ---
 
-# What Happens Internally
+## What Happens Internally
 
 Docker first:
 
@@ -164,13 +164,13 @@ Then:
 
 ---
 
-# Final Image Does NOT Contain
+## Final Image Does NOT Contain
 
 - Go compiler
 - Source code
 - Build tools
 
-# Final Image Contains Only
+## Final Image Contains Only
 
 - Your executable binary
 
