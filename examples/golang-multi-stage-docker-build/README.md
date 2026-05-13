@@ -5,7 +5,7 @@ The main purpose of choosing a golang based applciation to demostrate this examp
 So the real advantage of multi stage docker build and distro less images can be understand with a drastic decrease in the Image size.
 
 
-# A multi-stage Docker build is a way to use multiple FROM statements in one Dockerfile to create a smaller, cleaner, and more secure final image.
+A multi-stage Docker build is a way to use multiple FROM statements in one Dockerfile to create a smaller, cleaner, and more secure final image.
 
 It is mainly used when building applications like:
 
@@ -54,9 +54,9 @@ Go SDK
 build cache
 extra files
 
-# Even though the container only needs the final binary.
+Even though the container only needs the final binary.
 
-# Multi-Stage Build Solution
+Multi-Stage Build Solution
 
 We separate:
 
@@ -91,7 +91,7 @@ CMD ["/calculator"]
 
 
 
-#Complete Example
+Complete Example
 
 # Stage 1 - Build
 FROM golang:1.22 AS builder
@@ -121,7 +121,7 @@ Then:
 5. Copies only binary
 6. Removes everything else
 
-#Final image does NOT contain:
+Final image does NOT contain:
 
 Go compiler
 source code
