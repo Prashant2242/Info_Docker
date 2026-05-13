@@ -1,41 +1,53 @@
 # Multi Stage Docker Build
 
-The main purpose of choosing a golang based applciation to demostrate this example is golang is a statically-typed programming language that does not require a runtime in the traditional sense. Unlike dynamically-typed languages like Python, Ruby, and JavaScript, which rely on a runtime environment to execute their code, Go compiles directly to machine code, which can then be executed directly by the operating system.
+The main purpose of choosing a Golang-based application to demonstrate this example is that Go is a statically typed programming language that does not require a runtime in the traditional sense.
 
-So the real advantage of multi stage docker build and distro less images can be understand with a drastic decrease in the Image size.
+Unlike dynamically typed languages like Python, Ruby, and JavaScript, which rely on a runtime environment to execute their code, Go compiles directly into machine code that can be executed directly by the operating system.
 
+Because of this, the real advantage of **Multi-Stage Docker Builds** and **Distroless Images** can be clearly understood through the drastic reduction in image size.
 
-A multi-stage Docker build is a way to use multiple FROM statements in one Dockerfile to create a smaller, cleaner, and more secure final image.
+---
+
+## What is a Multi-Stage Docker Build?
+
+A multi-stage Docker build is a way to use multiple `FROM` statements in a single Dockerfile to create a:
+
+- Smaller image
+- Cleaner image
+- More secure image
 
 It is mainly used when building applications like:
 
-Go
-Java
-Node.js
-React
-Python
-Rust
+- Go
+- Java
+- Node.js
+- React
+- Python
+- Rust
 
-where you need build tools during compilation, but not in the final container.
+where build tools are needed during compilation, but not in the final production container.
 
-The Problem Without Multi-Stage Builds
+---
+
+# The Problem Without Multi-Stage Builds
 
 Suppose you have a Go application.
 
-**To compile Go code, Docker needs:**
+## To compile Go code, Docker needs:
 
-Go compiler
-Go libraries
-Build dependencies
+- Go compiler
+- Go libraries
+- Build dependencies
 
-**If you keep all of these inside the final image:**
+## If all of these remain inside the final image:
 
-image becomes large
-unnecessary tools remain
-security risk increases
+- Image becomes large
+- Unnecessary tools remain
+- Security risks increase
 
-Example:
+### Example
 
+```dockerfile
 FROM golang:1.22
 
 WORKDIR /app
@@ -45,54 +57,78 @@ COPY . .
 RUN go build -o calculator
 
 CMD ["./calculator"]
+```
 
 This image contains:
 
-your app
-Go compiler
-Go SDK
-build cache
-extra files
+- Your application
+- Go compiler
+- Go SDK
+- Build cache
+- Extra files
 
 Even though the container only needs the final binary.
 
-Multi-Stage Build Solution
+---
 
-We separate:
+# Multi-Stage Build Solution
 
-Build stage
-Runtime stage
-How It Works
-Stage 1 → Build the application
+We separate the process into:
+
+1. Build Stage
+2. Runtime Stage
+
+---
+
+# How It Works
+
+## Stage 1 → Build the Application
+
+```dockerfile
 FROM golang:1.22 AS builder
+```
 
 This stage contains Go tools.
 
 Then:
 
+```dockerfile
 WORKDIR /app
+
 COPY . .
+
 RUN go build -o calculator
+```
 
 Now Docker creates the binary.
 
-Stage 2 → Create minimal final image
+---
+
+## Stage 2 → Create Minimal Final Image
+
+```dockerfile
 FROM ubuntu:latest
+```
 
 This is a fresh new image.
 
-Now copy ONLY the compiled app:
+Now copy **ONLY** the compiled application:
 
+```dockerfile
 COPY --from=builder /app/calculator /calculator
+```
 
 Then run it:
 
+```dockerfile
 CMD ["/calculator"]
+```
 
+---
 
+# Complete Example
 
-Complete Example
-
+```dockerfile
 # Stage 1 - Build
 FROM golang:1.22 AS builder
 
@@ -108,57 +144,89 @@ FROM ubuntu:latest
 COPY --from=builder /app/calculator /calculator
 
 CMD ["/calculator"]
-What Happens Internally
+```
+
+---
+
+# What Happens Internally
 
 Docker first:
 
-Starts Go container
-Builds app
-Creates binary
+1. Starts a Go container
+2. Builds the application
+3. Creates the binary
 
 Then:
-4. Starts new clean Ubuntu container
-5. Copies only binary
+
+4. Starts a new clean Ubuntu container
+5. Copies only the binary
 6. Removes everything else
 
-Final image does NOT contain:
+---
 
-Go compiler
-source code
-build tools
+# Final Image Does NOT Contain
 
-Only:
+- Go compiler
+- Source code
+- Build tools
 
-your executable
-Benefits of Multi-Stage Builds
-1. Smaller Image Size
+# Final Image Contains Only
 
-Example:
+- Your executable binary
 
-Normal Go image → 1GB+
-Multi-stage image → 20MB
+---
 
-#Smaller images:
+# Benefits of Multi-Stage Builds
 
-download faster
-deploy faster
-use less storage
-2. Better Security
+## 1. Smaller Image Size
 
-No compiler/tools inside final container.
+### Example
 
-Less attack surface.
+| Type | Approx Size |
+|---|---|
+| Normal Go Image | 1GB+ |
+| Multi-Stage Image | 20MB |
 
-3. Cleaner Containers
+### Smaller Images:
 
-Only production files remain.
+- Download faster
+- Deploy faster
+- Use less storage
 
-4. Faster Deployments
+---
 
-Smaller images push/pull quickly.
+## 2. Better Security
 
-Useful in:
+No compiler or build tools inside the final container.
 
-Kubernetes
-CI/CD
-cloud deployments
+This reduces the attack surface.
+
+---
+
+## 3. Cleaner Containers
+
+Only production files remain inside the image.
+
+---
+
+## 4. Faster Deployments
+
+Smaller images push and pull quickly.
+
+Especially useful in:
+
+- Kubernetes
+- CI/CD Pipelines
+- Cloud Deployments
+
+---
+
+# Summary
+
+Multi-stage Docker builds help create:
+
+- Lightweight containers
+- Secure containers
+- Production-ready images
+
+They are one of the most important Docker optimization techniques used in modern DevOps workflows.
