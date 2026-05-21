@@ -58,7 +58,7 @@ eth0    eth0      ← Same cables, container side — appear as normal NICs insi
 
 ### Full Architecture Diagram
 
-![Docker Networking Architecture](docker-networking-architecture.svg)
+![Docker Networking Architecture](examples/docker-networking-architecture.svg)
 
 ### `eth0` — the physical NIC
 Your host machine's real network card. It holds the machine's LAN IP and is the only thing talking to the physical network. Everything else Docker does is virtual on top of this.
