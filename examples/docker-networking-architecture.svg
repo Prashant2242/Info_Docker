@@ -1,0 +1,201 @@
+<svg width="860" height="820" viewBox="0 0 860 820" xmlns="http://www.w3.org/2000/svg" font-family="ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,monospace">
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M2 1L8 5L2 9" fill="none" stroke="#555" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </marker>
+    <marker id="arrow-green" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M2 1L8 5L2 9" fill="none" stroke="#1a7a4a" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </marker>
+    <marker id="arrow-purple" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M2 1L8 5L2 9" fill="none" stroke="#6b46c1" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </marker>
+    <marker id="arrow-orange" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M2 1L8 5L2 9" fill="none" stroke="#b45309" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </marker>
+    <marker id="arrow-red" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M2 1L8 5L2 9" fill="none" stroke="#b91c1c" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </marker>
+  </defs>
+
+  <!-- Background -->
+  <rect width="860" height="820" fill="#f9fafb" rx="12"/>
+
+  <!-- Title -->
+  <text x="430" y="34" text-anchor="middle" font-size="18" font-weight="700" fill="#111827" font-family="ui-sans-serif,system-ui,sans-serif">Docker Networking Architecture</text>
+  <text x="430" y="54" text-anchor="middle" font-size="12" fill="#6b7280" font-family="ui-sans-serif,system-ui,sans-serif">veth pairs · docker0 bridge · bridge/host/custom/isolated networks</text>
+
+  <!-- ── INTERNET ── -->
+  <rect x="310" y="68" width="240" height="38" rx="19" fill="#dbeafe" stroke="#3b82f6" stroke-width="1.2"/>
+  <text x="430" y="92" text-anchor="middle" font-size="13" font-weight="700" fill="#1e40af" font-family="ui-sans-serif,system-ui,sans-serif">🌐  Internet / LAN</text>
+
+  <!-- Arrow: Internet ↕ eth0 -->
+  <line x1="430" y1="106" x2="430" y2="125" stroke="#3b82f6" stroke-width="1.4" marker-end="url(#arrow)"/>
+  <line x1="424" y1="125" x2="424" y2="106" stroke="#3b82f6" stroke-width="1.4" marker-end="url(#arrow)"/>
+
+  <!-- ── HOST MACHINE OUTER BOX ── -->
+  <rect x="16" y="134" width="828" height="388" rx="14" fill="#f0fdf4" stroke="#86efac" stroke-width="1.2" stroke-dasharray="7 4"/>
+  <text x="32" y="156" font-size="12" font-weight="700" fill="#166534" font-family="ui-sans-serif,system-ui,sans-serif">HOST MACHINE</text>
+
+  <!-- eth0 physical NIC -->
+  <rect x="300" y="143" width="260" height="46" rx="10" fill="#ccfbf1" stroke="#0d9488" stroke-width="1.2"/>
+  <text x="430" y="162" text-anchor="middle" font-size="13" font-weight="700" fill="#134e4a" font-family="ui-sans-serif,system-ui,sans-serif">eth0</text>
+  <text x="430" y="179" text-anchor="middle" font-size="11" fill="#0f766e" font-family="ui-sans-serif,system-ui,sans-serif">Physical NIC  ·  192.168.1.10</text>
+
+  <!-- iptables / NAT box -->
+  <rect x="578" y="152" width="148" height="30" rx="7" fill="#f3f4f6" stroke="#9ca3af" stroke-width="0.8"/>
+  <text x="652" y="171" text-anchor="middle" font-size="11" fill="#374151" font-family="ui-sans-serif,system-ui,sans-serif">iptables / NAT</text>
+  <line x1="562" y1="166" x2="576" y2="166" stroke="#9ca3af" stroke-width="0.9" marker-end="url(#arrow)"/>
+
+  <!-- Arrow eth0 → docker0 -->
+  <line x1="430" y1="189" x2="430" y2="213" stroke="#7c3aed" stroke-width="1.4" marker-end="url(#arrow-purple)"/>
+
+  <!-- docker0 bridge -->
+  <rect x="280" y="213" width="300" height="46" rx="10" fill="#ede9fe" stroke="#7c3aed" stroke-width="1.2"/>
+  <text x="430" y="232" text-anchor="middle" font-size="13" font-weight="700" fill="#4c1d95" font-family="ui-sans-serif,system-ui,sans-serif">docker0  (virtual bridge switch)</text>
+  <text x="430" y="249" text-anchor="middle" font-size="11" fill="#6d28d9" font-family="ui-sans-serif,system-ui,sans-serif">172.17.0.1  ·  default bridge network</text>
+
+  <!-- ── CONTAINER A ── -->
+  <rect x="22" y="286" width="282" height="218" rx="12" fill="#fff" stroke="#6ee7b7" stroke-width="1" stroke-dasharray="5 3"/>
+  <text x="36" y="304" font-size="11" font-weight="700" fill="#065f46" font-family="ui-sans-serif,system-ui,sans-serif">Container A  (bridge network)</text>
+
+  <!-- vethXXXX host side -->
+  <rect x="76" y="312" width="140" height="38" rx="8" fill="#fff7ed" stroke="#fb923c" stroke-width="1"/>
+  <text x="146" y="327" text-anchor="middle" font-size="12" font-weight="700" fill="#7c2d12" font-family="ui-sans-serif,system-ui,sans-serif">vethXXXX</text>
+  <text x="146" y="342" text-anchor="middle" font-size="10" fill="#9a3412" font-family="ui-sans-serif,system-ui,sans-serif">host side of veth pair</text>
+
+  <!-- veth cable arrow down -->
+  <line x1="146" y1="350" x2="146" y2="374" stroke="#16a34a" stroke-width="1.6" stroke-dasharray="4 3" marker-end="url(#arrow-green)"/>
+  <text x="154" y="366" font-size="9" fill="#15803d" font-family="ui-sans-serif,system-ui,sans-serif">veth cable</text>
+
+  <!-- eth0 container side -->
+  <rect x="76" y="374" width="140" height="38" rx="8" fill="#dcfce7" stroke="#16a34a" stroke-width="1"/>
+  <text x="146" y="389" text-anchor="middle" font-size="12" font-weight="700" fill="#14532d" font-family="ui-sans-serif,system-ui,sans-serif">eth0  (container)</text>
+  <text x="146" y="404" text-anchor="middle" font-size="10" fill="#166534" font-family="ui-sans-serif,system-ui,sans-serif">172.17.0.2</text>
+
+  <!-- App box -->
+  <rect x="76" y="428" width="140" height="30" rx="7" fill="#f3f4f6" stroke="#d1d5db" stroke-width="0.8"/>
+  <text x="146" y="447" text-anchor="middle" font-size="11" fill="#374151" font-family="ui-sans-serif,system-ui,sans-serif">App  ·  port 80</text>
+
+  <!-- vethXXXX → docker0 curved path -->
+  <path d="M218 331 Q282 331 282 236" fill="none" stroke="#16a34a" stroke-width="1.4" marker-end="url(#arrow-green)"/>
+
+  <!-- ── CONTAINER B ── -->
+  <rect x="556" y="286" width="282" height="218" rx="12" fill="#fff" stroke="#6ee7b7" stroke-width="1" stroke-dasharray="5 3"/>
+  <text x="570" y="304" font-size="11" font-weight="700" fill="#065f46" font-family="ui-sans-serif,system-ui,sans-serif">Container B  (bridge network)</text>
+
+  <!-- vethYYYY host side -->
+  <rect x="640" y="312" width="140" height="38" rx="8" fill="#fff7ed" stroke="#fb923c" stroke-width="1"/>
+  <text x="710" y="327" text-anchor="middle" font-size="12" font-weight="700" fill="#7c2d12" font-family="ui-sans-serif,system-ui,sans-serif">vethYYYY</text>
+  <text x="710" y="342" text-anchor="middle" font-size="10" fill="#9a3412" font-family="ui-sans-serif,system-ui,sans-serif">host side of veth pair</text>
+
+  <!-- veth cable arrow down -->
+  <line x1="710" y1="350" x2="710" y2="374" stroke="#16a34a" stroke-width="1.6" stroke-dasharray="4 3" marker-end="url(#arrow-green)"/>
+  <text x="718" y="366" font-size="9" fill="#15803d" font-family="ui-sans-serif,system-ui,sans-serif">veth cable</text>
+
+  <!-- eth0 container B side -->
+  <rect x="640" y="374" width="140" height="38" rx="8" fill="#dcfce7" stroke="#16a34a" stroke-width="1"/>
+  <text x="710" y="389" text-anchor="middle" font-size="12" font-weight="700" fill="#14532d" font-family="ui-sans-serif,system-ui,sans-serif">eth0  (container)</text>
+  <text x="710" y="404" text-anchor="middle" font-size="10" fill="#166534" font-family="ui-sans-serif,system-ui,sans-serif">172.17.0.3</text>
+
+  <!-- App box B -->
+  <rect x="640" y="428" width="140" height="30" rx="7" fill="#f3f4f6" stroke="#d1d5db" stroke-width="0.8"/>
+  <text x="710" y="447" text-anchor="middle" font-size="11" fill="#374151" font-family="ui-sans-serif,system-ui,sans-serif">App  ·  port 8080</text>
+
+  <!-- vethYYYY → docker0 curved path -->
+  <path d="M640 331 Q576 331 576 236" fill="none" stroke="#16a34a" stroke-width="1.4" marker-end="url(#arrow-green)"/>
+
+  <!-- A ↔ B via docker0 dashed arrow -->
+  <line x1="304" y1="395" x2="550" y2="395" stroke="#7c3aed" stroke-width="1.1" stroke-dasharray="5 3" marker-end="url(#arrow-purple)"/>
+  <line x1="550" y1="402" x2="304" y2="402" stroke="#7c3aed" stroke-width="1.1" stroke-dasharray="5 3" marker-end="url(#arrow-purple)"/>
+  <text x="428" y="388" text-anchor="middle" font-size="10" fill="#6d28d9" font-family="ui-sans-serif,system-ui,sans-serif">A ↔ B via docker0 (Layer 2)</text>
+
+  <!-- Port mapping label -->
+  <text x="36" y="476" font-size="10" fill="#6d28d9" font-family="ui-sans-serif,system-ui,sans-serif">-p 8080:80</text>
+  <text x="36" y="490" font-size="9" fill="#9ca3af" font-family="ui-sans-serif,system-ui,sans-serif">host:8080 → ctr:80 (iptables DNAT)</text>
+
+  <!-- ── HOST NETWORK CONTAINER ── -->
+  <rect x="316" y="286" width="228" height="80" rx="12" fill="#fef2f2" stroke="#fca5a5" stroke-width="1" stroke-dasharray="5 3"/>
+  <text x="328" y="304" font-size="11" font-weight="700" fill="#991b1b" font-family="ui-sans-serif,system-ui,sans-serif">Container C  (--network host)</text>
+  <rect x="336" y="310" width="190" height="38" rx="8" fill="#fee2e2" stroke="#ef4444" stroke-width="1"/>
+  <text x="431" y="325" text-anchor="middle" font-size="11" font-weight="700" fill="#7f1d1d" font-family="ui-sans-serif,system-ui,sans-serif">shares host eth0 directly</text>
+  <text x="431" y="340" text-anchor="middle" font-size="10" fill="#991b1b" font-family="ui-sans-serif,system-ui,sans-serif">No NAT · No veth · No isolation</text>
+  <!-- host eth0 dashed line to container C -->
+  <path d="M304 166 Q290 166 290 296 Q290 310 334 318" fill="none" stroke="#ef4444" stroke-width="1.1" stroke-dasharray="4 3" marker-end="url(#arrow-red)"/>
+
+  <!-- ── ISOLATED CUSTOM NETWORK ── -->
+  <rect x="16" y="540" width="828" height="266" rx="14" fill="#fffbeb" stroke="#fcd34d" stroke-width="1.2" stroke-dasharray="7 4"/>
+  <text x="32" y="562" font-size="12" font-weight="700" fill="#78350f" font-family="ui-sans-serif,system-ui,sans-serif">ISOLATED CUSTOM NETWORK  —  docker network create --driver bridge mynet</text>
+
+  <!-- mynet bridge -->
+  <rect x="300" y="570" width="260" height="44" rx="10" fill="#fef3c7" stroke="#d97706" stroke-width="1.2"/>
+  <text x="430" y="589" text-anchor="middle" font-size="13" font-weight="700" fill="#451a03" font-family="ui-sans-serif,system-ui,sans-serif">mynet  (custom bridge)</text>
+  <text x="430" y="605" text-anchor="middle" font-size="11" fill="#92400e" font-family="ui-sans-serif,system-ui,sans-serif">10.10.0.1  ·  isolated subnet</text>
+
+  <!-- Container D -->
+  <rect x="26" y="632" width="270" height="160" rx="12" fill="#fff" stroke="#fbbf24" stroke-width="1" stroke-dasharray="5 3"/>
+  <text x="42" y="650" font-size="11" font-weight="700" fill="#78350f" font-family="ui-sans-serif,system-ui,sans-serif">Container D  (mynet only)</text>
+
+  <rect x="76" y="658" width="166" height="36" rx="8" fill="#fff7ed" stroke="#fb923c" stroke-width="1"/>
+  <text x="159" y="673" text-anchor="middle" font-size="12" font-weight="700" fill="#7c2d12" font-family="ui-sans-serif,system-ui,sans-serif">vethDDDD</text>
+  <text x="159" y="687" text-anchor="middle" font-size="10" fill="#9a3412" font-family="ui-sans-serif,system-ui,sans-serif">host end</text>
+
+  <line x1="159" y1="694" x2="159" y2="714" stroke="#16a34a" stroke-width="1.6" stroke-dasharray="4 3" marker-end="url(#arrow-green)"/>
+
+  <rect x="76" y="714" width="166" height="36" rx="8" fill="#dcfce7" stroke="#16a34a" stroke-width="1"/>
+  <text x="159" y="729" text-anchor="middle" font-size="12" font-weight="700" fill="#14532d" font-family="ui-sans-serif,system-ui,sans-serif">eth0  ·  10.10.0.2</text>
+  <text x="159" y="743" text-anchor="middle" font-size="10" fill="#166534" font-family="ui-sans-serif,system-ui,sans-serif">DNS name: db</text>
+
+  <rect x="76" y="762" width="166" height="26" rx="7" fill="#f3f4f6" stroke="#d1d5db" stroke-width="0.8"/>
+  <text x="159" y="779" text-anchor="middle" font-size="11" fill="#374151" font-family="ui-sans-serif,system-ui,sans-serif">DB service (postgres)</text>
+
+  <!-- D → mynet -->
+  <path d="M244 676 Q300 676 300 594" fill="none" stroke="#d97706" stroke-width="1.4" marker-end="url(#arrow-orange)"/>
+
+  <!-- Container E -->
+  <rect x="564" y="632" width="270" height="160" rx="12" fill="#fff" stroke="#fbbf24" stroke-width="1" stroke-dasharray="5 3"/>
+  <text x="578" y="650" font-size="11" font-weight="700" fill="#78350f" font-family="ui-sans-serif,system-ui,sans-serif">Container E  (mynet only)</text>
+
+  <rect x="614" y="658" width="166" height="36" rx="8" fill="#fff7ed" stroke="#fb923c" stroke-width="1"/>
+  <text x="697" y="673" text-anchor="middle" font-size="12" font-weight="700" fill="#7c2d12" font-family="ui-sans-serif,system-ui,sans-serif">vethEEEE</text>
+  <text x="697" y="687" text-anchor="middle" font-size="10" fill="#9a3412" font-family="ui-sans-serif,system-ui,sans-serif">host end</text>
+
+  <line x1="697" y1="694" x2="697" y2="714" stroke="#16a34a" stroke-width="1.6" stroke-dasharray="4 3" marker-end="url(#arrow-green)"/>
+
+  <rect x="614" y="714" width="166" height="36" rx="8" fill="#dcfce7" stroke="#16a34a" stroke-width="1"/>
+  <text x="697" y="729" text-anchor="middle" font-size="12" font-weight="700" fill="#14532d" font-family="ui-sans-serif,system-ui,sans-serif">eth0  ·  10.10.0.3</text>
+  <text x="697" y="743" text-anchor="middle" font-size="10" fill="#166534" font-family="ui-sans-serif,system-ui,sans-serif">DNS name: app</text>
+
+  <rect x="614" y="762" width="166" height="26" rx="7" fill="#f3f4f6" stroke="#d1d5db" stroke-width="0.8"/>
+  <text x="697" y="779" text-anchor="middle" font-size="11" fill="#374151" font-family="ui-sans-serif,system-ui,sans-serif">App service (nginx)</text>
+
+  <!-- E → mynet -->
+  <path d="M616 676 Q558 676 558 594" fill="none" stroke="#d97706" stroke-width="1.4" marker-end="url(#arrow-orange)"/>
+
+  <!-- D ↔ E via mynet -->
+  <line x1="296" y1="748" x2="460" y2="748" stroke="#d97706" stroke-width="1.1" stroke-dasharray="5 3" marker-end="url(#arrow-orange)"/>
+  <line x1="460" y1="755" x2="296" y2="755" stroke="#d97706" stroke-width="1.1" stroke-dasharray="5 3" marker-end="url(#arrow-orange)"/>
+  <text x="378" y="740" text-anchor="middle" font-size="10" fill="#92400e" font-family="ui-sans-serif,system-ui,sans-serif">D ↔ E by name (built-in DNS)</text>
+
+  <!-- Cannot reach label -->
+  <rect x="300" y="784" width="260" height="22" rx="6" fill="#fee2e2" stroke="#f87171" stroke-width="0.8"/>
+  <text x="430" y="799" text-anchor="middle" font-size="10" font-weight="700" fill="#b91c1c" font-family="ui-sans-serif,system-ui,sans-serif">✕  Containers A/B CANNOT reach D/E</text>
+
+  <!-- ── LEGEND ── -->
+  <rect x="302" y="490" width="256" height="120" rx="10" fill="#fff" stroke="#d1d5db" stroke-width="0.8"/>
+  <text x="430" y="509" text-anchor="middle" font-size="11" font-weight="700" fill="#111827" font-family="ui-sans-serif,system-ui,sans-serif">Legend</text>
+
+  <line x1="318" y1="524" x2="344" y2="524" stroke="#3b82f6" stroke-width="1.4" marker-end="url(#arrow)"/>
+  <text x="350" y="528" font-size="10" fill="#374151" font-family="ui-sans-serif,system-ui,sans-serif">Traffic path (NAT/routed)</text>
+
+  <line x1="318" y1="541" x2="344" y2="541" stroke="#16a34a" stroke-width="1.6" stroke-dasharray="4 3" marker-end="url(#arrow-green)"/>
+  <text x="350" y="545" font-size="10" fill="#374151" font-family="ui-sans-serif,system-ui,sans-serif">veth cable (virtual wire)</text>
+
+  <line x1="318" y1="558" x2="344" y2="558" stroke="#7c3aed" stroke-width="1.1" stroke-dasharray="5 3" marker-end="url(#arrow-purple)"/>
+  <text x="350" y="562" font-size="10" fill="#374151" font-family="ui-sans-serif,system-ui,sans-serif">Container ↔ bridge</text>
+
+  <line x1="318" y1="575" x2="344" y2="575" stroke="#d97706" stroke-width="1.1" stroke-dasharray="5 3" marker-end="url(#arrow-orange)"/>
+  <text x="350" y="579" font-size="10" fill="#374151" font-family="ui-sans-serif,system-ui,sans-serif">Custom (mynet) bridge</text>
+
+  <line x1="318" y1="592" x2="344" y2="592" stroke="#ef4444" stroke-width="1.1" stroke-dasharray="4 3" marker-end="url(#arrow-red)"/>
+  <text x="350" y="596" font-size="10" fill="#374151" font-family="ui-sans-serif,system-ui,sans-serif">Host network (no veth/NAT)</text>
+</svg>
