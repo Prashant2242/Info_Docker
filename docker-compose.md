@@ -232,31 +232,31 @@ Docker Compose internally performs:
 
 ### Docker Compose Commands
 
-Start Containers
+Start Containers:
 docker compose up
 
-Run in Background
+Run in Background:
 docker compose up -d
 
 -d means detached mode.
 
-Stop Containers
+Stop Containers:
 docker compose down
 
-View Running Containers
+View Running Containers:
 docker compose ps
 
-View Logs
+View Logs: 
 docker compose logs
 
 Live logs:
 
 docker compose logs -f
 
-Rebuild Images
+Rebuild Images:
 docker compose up --build
 
-Build Only
+Build Only:
 docker compose build
 
 Docker Compose Networking
