@@ -30,7 +30,7 @@ Managing volumes
 Managing environment variables
 Starting all services with one command
   
-###Docker Compose Architecture
+### Docker Compose Architecture
   
                 Docker Compose
                         |
@@ -43,7 +43,7 @@ Starting all services with one command
 
 All containers communicate through an internal Docker network.
 
-###Docker Compose Workflow
+### Docker Compose Workflow
   
 compose.yaml
       |
@@ -62,7 +62,7 @@ Create Containers
       v
 Start Containers
   
-###Difference Between         Dockerfile and Docker Compose
+### Difference Between         Dockerfile and Docker Compose
 Dockerfile	                     Docker Compose
 Builds image 	                   Runs multi-container apps
 Defines image instructions	     Defines application stack
@@ -70,9 +70,9 @@ Used with docker build	         Used with docker compose up
   
 Creates one image	Manages many containers
   
-Important Components of Docker Compose
+### Important Components of Docker Compose
 
-1. Services
+#### 1. Services
 
 Services define containers.
 
@@ -86,7 +86,8 @@ Here:
 
 web = service name
 nginx = image used to create container
-2. Networks
+
+#### 2. Networks
 
 Docker Compose automatically creates a network.
 
@@ -100,7 +101,7 @@ db:3306
 
 No need to know IP addresses.
 
-3. Volumes
+#### 3. Volumes
 
 Volumes store persistent data.
 
@@ -128,7 +129,7 @@ Volume Architecture
 
 Data survives even after container deletion.
 
-4. Port Mapping
+#### 4. Port Mapping
 
 Syntax:
 
@@ -143,18 +144,25 @@ ports:
 Meaning:
 
 Host Port 8080 ---> Container Port 80
+
 Basic Docker Compose Example
+
 compose.yaml
+
 services:
   web:
     image: nginx
     ports:
       - "8080:80"
+      
 Run Application
 docker compose up
+
 Open Browser
 http://localhost:8080
-Architecture
+
+#### Architecture
+
 Browser
    |
 localhost:8080
@@ -166,7 +174,8 @@ Build Images Using Dockerfile
 
 Docker Compose can build images automatically.
 
-Dockerfile
+#### Dockerfile
+
 FROM node:18
 
 WORKDIR /app
@@ -176,12 +185,15 @@ COPY . .
 RUN npm install
 
 CMD ["node", "server.js"]
+
+
 compose.yaml
 services:
   app:
     build: .
     ports:
       - "3000:3000"
+      
 Build Process
 Dockerfile
      |
@@ -193,7 +205,8 @@ Build Image
      |
      v
 Create Container
-Important Concept
+
+### Important Concept
 
 Docker Compose can:
 
@@ -203,7 +216,7 @@ Start containers
 
 automatically.
 
-Internal Working
+#### Internal Working
 
 When you run:
 
@@ -216,9 +229,12 @@ Docker Compose internally performs:
 3. Build Images
 4. Create Containers
 5. Start Containers
-Docker Compose Commands
+
+### Docker Compose Commands
+
 Start Containers
 docker compose up
+
 Run in Background
 docker compose up -d
 
@@ -226,18 +242,23 @@ docker compose up -d
 
 Stop Containers
 docker compose down
+
 View Running Containers
 docker compose ps
+
 View Logs
 docker compose logs
 
 Live logs:
 
 docker compose logs -f
+
 Rebuild Images
 docker compose up --build
+
 Build Only
 docker compose build
+
 Docker Compose Networking
 
 All services communicate using service names.
@@ -263,8 +284,9 @@ backend <----> db
 
 Docker automatically provides DNS resolution.
 
-Multi-Container Example
+#### Multi-Container Example
 compose.yaml
+
 services:
   frontend:
     image: nginx
@@ -280,7 +302,9 @@ services:
     image: mysql
     environment:
       MYSQL_ROOT_PASSWORD: root
-Architecture
+      
+#### Architecture
+
                 User Browser
                       |
                       v
@@ -291,7 +315,9 @@ Architecture
                       |
                       v
                  MySQL Database
+                 
 Real Example: Nginx + Multiple Node.js Containers + Redis
+
 compose.yaml
 services:
   redis:
@@ -320,7 +346,8 @@ services:
     depends_on:
       - web1
       - web2
-Architecture Diagram
+      
+#### Architecture Diagram
                     User Browser
                           |
                           v
@@ -334,22 +361,25 @@ Architecture Diagram
                 |
                 v
               Redis
-How It Works
-Step 1
+
+#### How It Works
+
+##### Step 1
 
 Docker Compose builds:
 
 web image
 nginx image
-Step 2
 
+##### Step 2
 Docker Compose creates:
 
 web1 container
 web2 container
 nginx container
 redis container
-Step 3
+
+##### Step 3
 
 Nginx acts as:
 
@@ -379,7 +409,7 @@ scalability
 high availability
 depends_on
 
-Example:
+##### Example:
 
 depends_on:
   - web1
@@ -390,7 +420,7 @@ Meaning:
 Start web1 and web2 before nginx
 Restart Policy
 
-Example:
+###### Example:
 
 restart: on-failure
 
@@ -399,7 +429,7 @@ If container crashes:
 Docker automatically restarts it.
 Environment Variables
 
-Example:
+###### Example:
 
 environment:
   MYSQL_ROOT_PASSWORD: root
